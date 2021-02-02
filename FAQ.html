@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <title></title>
+        <style>
+</style>
+        
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item { list-style-type: none; } .task-list-item-checkbox { margin-left: -20px; vertical-align: middle; }
+</style>
+        
+        
+        
+    </head>
+    <body class="vscode-body vscode-light">
+        <p><strong>Why use csv2table?</strong></p>
+<p>Uploading large csv datasets from apex application takes time, csv2table makes it a lot faster.</p>
+<p><strong>can I use csv2table with oracle 11g and Apex 4.2 ?</strong></p>
+<p>Yes, the plugin can be configured to use any plsql data parser like json_table, apex_data_parser, xmltable and custom insert implementation, making it possible to be used in any database and apex version.</p>
+<p>This beta version 1.0 is developed and tested in Oracle DB 19c/ Apex 20.2</p>
+<p><strong>can I insert records into other schema than apex parsing schema?</strong></p>
+<p>Yes, plugin code will execute insert against csv2table (table) using dynamic sql. You will have to create table synonym and give insert grants to apex parsing schema.
+You can also choose custom insert implementation to insert in any schema or table per your environment and requirements</p>
+<p><strong>Why is csv2table plugin fast?</strong></p>
+<p>csv2table parses records from local files in Javascript memory in chunks (JSON) using fast csv parser (PapaParse), keeping memory usage low and inserting parsed chunks using json_table function, which is very also very fast.</p>
+<p><strong>How do I know, when the file is fully uploaded and all records are inserted into csv2table?</strong></p>
+<p>Complete callback function is only called, when csv2table is done processing the files. You can the check the result object for &quot;complete&quot; status, and take further actions</p>
+<pre><code class="language-js"><div><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">completeFn</span>(<span class="hljs-params">results</span>)</span>{
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;I am error complete callback function&quot;</span>, results);
+
+    <span class="hljs-keyword">if</span> ( results.status.state == <span class="hljs-string">&quot;complete&quot;</span> ) {
+        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&#x27;Upload completed&#x27;</span>);
+    }
+   
+}
+
+</div></code></pre>
+<p><strong>How do I catch any exceptions?</strong>
+Error callback function will be called for any parsing and insert errors. You can check the result object for &quot;error&quot; status and take further actions.</p>
+<pre><code class="language-js"><div><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">errorFn</span>(<span class="hljs-params">results</span>)</span>{
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;I am error callback function&quot;</span>, results);
+
+    <span class="hljs-keyword">if</span> ( results.status.state == <span class="hljs-string">&quot;error&quot;</span> ) {
+        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&#x27;error message&#x27;</span>, results.error.message);
+    }
+   
+}
+
+</div></code></pre>
+<p><strong>How can I track upload progress?</strong>
+After every chunk is inserted, chunk insert callback function is called. The result argument contains the progress value between 0..1</p>
+<pre><code class="language-js"><div><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">chunkInsertedFn</span>(<span class="hljs-params">results</span>)</span>{
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;I am chunk Inserted callback function&quot;</span>, results);
+
+    <span class="hljs-built_in">console</span>.log(results.progressSoFar());
+   
+}
+
+</div></code></pre>
+<p><strong>Does the plugin support multiple files?</strong></p>
+<p>No. Multiple file feature is work under progress for future version.</p>
+<p><strong>can I uplooad tab delimited or color delimited file?</strong></p>
+<p>Yes, delimiters are auto detected by PapaParse csv parser.</p>
+<p>you can also set the delimiter in the Javascript Initiliazation option.</p>
+<p>Below Javascript initialization function, sets the plugin options during run time</p>
+<pre><code class="language-js"><div><span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">options</span>) </span>{
+    options.delimiter = <span class="hljs-string">&quot;:&quot;</span> ;<span class="hljs-comment">//colon delimiter</span>
+    options.newline = <span class="hljs-string">&quot;\n&quot;</span>  ; <span class="hljs-comment">//newline separating records</span>
+    options.quoteChar = <span class="hljs-string">&quot;&#x27;&quot;</span>;  <span class="hljs-comment">//char used for quoting columns</span>
+    options.escapeChar = <span class="hljs-string">&quot;\\&quot;</span>;  <span class="hljs-comment">//char used for escaping quoteChar</span>
+    options.chunkSize = <span class="hljs-string">&quot;1000000&quot;</span>;
+    options.threads = <span class="hljs-number">2</span>;
+    options.fileType = <span class="hljs-string">&quot;remote&quot;</span>;
+    options.skipFirstNRows = <span class="hljs-string">&quot;1&quot;</span>
+}
+
+</div></code></pre>
+<p>For more details please refer to PapaPare documentation on csv parser <a href="https://www.papaparse.com/docs#config"> configuration </a></p>
+<p><strong>How can I map file columns to csv2table columns?</strong></p>
+<p>Column n is mapped to <a href="http://csvtable.cn">csvtable.cn</a> , for e.g 1st column of records will be inserted into csvtable.c1</p>
+<p><strong>How do I validate column format (e.g. Date) and any business validation on columns or set of rows?</strong></p>
+<p>After upload is completed, all records are available in csv2table, having same upload Identifier in csv2table.upload_ID, which can be used to query records and perform any column or row based validations.</p>
+<pre><code class="language-js"><div><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">completeFn</span>(<span class="hljs-params">results</span>)</span>{
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;I am error complete callback function&quot;</span>, results);
+
+    <span class="hljs-keyword">if</span> ( results.status.state == <span class="hljs-string">&quot;complete&quot;</span> ) {
+        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&#x27;Upload completed upload_ID: &#x27;</span>, results.uploadID());
+
+        <span class="hljs-comment">//use results.uploadID() to get the upload_ID</span>
+        <span class="hljs-comment">//perform call ajax or submit page to execute</span>
+        <span class="hljs-comment">// validations using upload_ID</span>
+    }
+   
+}
+
+</div></code></pre>
+<p>Note : Upload_ID is also available in error and chunk inserted callback function</p>
+<p><strong>can I pause the file parsing during upload?</strong></p>
+<p>Yes, you can only pause the parser for stream based upload, i.e when stream option is set to 'Y'</p>
+<p>In chunk inserted callback, you can set the pause and resume.</p>
+<pre><code class="language-js"><div>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">chunkInsertedFn</span>(<span class="hljs-params">results</span>)</span>{
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;I am chunk Inserted callback function&quot;</span>, results);
+
+    <span class="hljs-keyword">if</span> ( csv2table ) { <span class="hljs-comment">//csv2table is global object available during upload process and can be access in callbacks</span>
+        csv2table.pause();
+    }
+
+    <span class="hljs-comment">//do something when upload is paused</span>
+
+    <span class="hljs-keyword">if</span> ( csv2table ) {
+        csv2table.resume()
+    }
+   
+}
+
+</div></code></pre>
+<p><strong>How can I identify the row containing column header in csv2table after upload is completed?</strong></p>
+<p>If inserts are done parallelly, by setting threads options &gt; 1, then so rows are not inserted in order and you will have to query the csv2table with name of header column to identify the header record</p>
+<pre><code class="language-sql"><div><span class="hljs-keyword">select</span> * <span class="hljs-keyword">from</span> csv2table <span class="hljs-keyword">where</span> c1=<span class="hljs-string">&#x27;name of first column header&#x27;</span>
+
+</div></code></pre>
+<p><strong>are blank lines skipped?</strong></p>
+<p>Yes</p>
+<p><strong>can my file contain record where some columns are quoted and some are not?</strong></p>
+<p>Yes and No.</p>
+<p>for e.g below is csv file</p>
+<p>&quot;Hello&quot;,World</p>
+<p>Welcome,&quot;Back&quot;</p>
+<p>&quot;Thank&quot;,&quot;You&quot;</p>
+<p>No, Problem</p>
+<p>?**</p>
+<p>No, but I have found that, PapaParse has bug in parsing mixed quoted and unquoted columns in a record, when stream is set to Y.</p>
+<p>Yes, You can use it without issues, by setting chunksize greater than filesize.
+for e.g if your file size is within 5mb, then set the chunkSize to 10mb for files , which may have mixed quoted and unquoted columns.</p>
+<p><strong>does csv2table clean itself by deleting old records periodically?</strong></p>
+<p>No, you can write a archiver and schedule it for cleanups.</p>
+
+    </body>
+    </html>

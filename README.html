@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <title>csv2table &lpar;Beta Version 1&period;0&rpar;</title>
+        <style>
+</style>
+        
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item { list-style-type: none; } .task-list-item-checkbox { margin-left: -20px; vertical-align: middle; }
+</style>
+        
+        
+        
+    </head>
+    <body class="vscode-body vscode-light">
+        <h1 id="csv2table-beta-version-10">csv2table (Beta Version 1.0)</h1>
+<p>csv2table is Oracle Apex, dynamic action plugin, built to upload large csv datasets into table.</p>
+<h1 id="demo">Demo</h1>
+<ul>
+<li>Users can upload local csv file and remote csv using url, monitor the progress and review the inserted records</li>
+<li>Options such as streaming, chunkSize, Threads and PLSQL data parsers, realtime progress monitoring, highlight plugin features</li>
+<li><a href="https://gopalmallya.com/ords/r/gopalmallya/csv2table"> demo </a></li>
+</ul>
+<h1 id="environment">Environment</h1>
+<ul>
+<li>Tested using Nightwatch/Firefox/Chrome/Oracle DB 19c/Apex 20.2</li>
+<li>The plugin PLSQL code, uses dynamic sql and no version dependent features, to support this functionality on any databases 10g or later</li>
+<li>Work is under progress to test in Oracle DB 11g/Apex 5.x</li>
+</ul>
+<h1 id="install">Install</h1>
+<ul>
+<li>
+<p>Download create_csv2table_seq.sql and csv2table_plugin.sql from <a href="https://github.com/gopalmallya/apex/tree/main/csv2table/install"> install directory </a></p>
+</li>
+<li>
+<p>Execute create_csv2table_seq.sql to create “csv2table” table and sequence “csv2table_seq”, in apex parsing schema.</p>
+<pre><code class="language-s"><code><div>    @create_csv2table_seq.sql
+</div></code></code></pre>
+<p>Note - You can execute this script in another schema of your choice, but please create synonyms for table and sequence.</p>
+</li>
+<li>
+<p>Import csv2table_plugin.sql, to install the plugin</p>
+<blockquote>
+<p>Login to your Apex workspace → App Builder → Import → Choose “csv2table.sql” → File type → Plug-in → Next → Install Plugin</p>
+</blockquote>
+</li>
+</ul>
+<h1 id="configure">Configure</h1>
+<p>Below is an example plugin configuration to upload local file selected in file browse page item P1_FILE, when user clicks upload button</p>
+<ul>
+<li>
+<p>Create a FILE Browse page item say P1_FILE, on page 1.</p>
+</li>
+<li>
+<p>Create Button say P1_UPLOAD_BTN</p>
+</li>
+<li>
+<p>Create dynamic action on P1_UPLOAD_BTN</p>
+<ul>
+<li>Right click on button → <em>Create Dynamic Action</em> → <em>True Action</em> → Identification Section , select <strong>csv2table [Plug-in]</strong> in <em>Action</em> Drop down</li>
+<li><em>File Type</em> → Local File</li>
+<li><em>File ID</em> → P1_FILE</li>
+<li><em>Insert Type</em>
+<ul>
+<li>JSON_TABLE (database version 12c or later)</li>
+<li>APEX_DATA_PARSER ( apex version 19.1 or later)</li>
+<li>XMLTABLE ( for database version &lt; 12c and apex version &lt; 19.1 )</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>For more information on configuration options, select the Option → click Help</p>
+</li>
+</ul>
+<h2 id="testing">Testing</h2>
+<ul>
+<li>Run the page 1</li>
+<li>Choose any csv text file in File browse item</li>
+<li>Click Upload button</li>
+<li>Open browser console log, to view the logs, find and copy upload_id</li>
+<li>SQL Workshp → SQL Commands<pre><code><code><div>select * from csv2table where upload_id = :upload_id;
+</div></code></code></pre>
+</li>
+</ul>
+<h1 id="options">Options</h1>
+<p>You can change the behaviour of csv2table plugin by configuring options, in dynamic action properties, or  in Advanced -&gt; Javascript initialization Code</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>File Type</strong></td>
+<td><pre>Select <strong>Local File</strong>, for  uploading csv file using File Browse page item. <br>Select <strong>Remote URL</strong> , for uploading csv file using csv download url.</pre></td>
+</tr>
+<tr>
+<td><strong>File ID</strong></td>
+<td><pre>To upload local file(s) using File browse page item or html input type=file, enter the <strong>ID</strong> of the input type=file. <br> for e.g. PX_FILE <br>To upload remote file, select the ID of the page item where user can select or type url <br> for e.g. PX_URL <br> <strong>Note</strong> - For remote file the plugin, gets the file content using xmlHTTPRequest and requires Access-Control-Allow-Origin header to be enabled by the source server hosting the csv file. If not enabled,  you will get CORS error thrown by the browser.<pre></td>
+</tr>
+<tr>
+<td><strong>Skip First N Rows</strong></td>
+<td><pre>Enter the number of rows you want to be skipped from the beginning of the csv file.<br>If you enter 1, then 1st record of csv file will be skipped and will not be inserted into table.<pre></td>
+</tr>
+<tr>
+<td><strong>Stream</strong></td>
+<td><pre>When stream is set to <strong>Yes</strong>, the file will be read and parsed in chunks, per byte size set in <strong>chunkSize</strong> option, keeping client side javascript memory usage low and also speeding up the inserts into table <br>When set to <strong>No</strong> , entire file will be read in javascript memory<br>When FileType is Remote URL, stream = <strong>Yes</strong>, will result in CORS error thrown by browser, unless CORS Access-Control-Allow-Origin header is enabled at the source hosting the csv file.</pre></td>
+</tr>
+<tr>
+<td><strong>chunkSize</strong></td>
+<td><pre>chunkSize is the number of bytes used by javascript parser (Papaparse) to parse file in chunks at a time, when <strong>Stream</strong> option is set to <strong>Yes</strong>.<br>Ajax thread inserts a single chunk into the csv2table.<br>Please configure the <strong>chunkSize</strong> and <strong>threads</strong> as a combination to tune memory and insert performance.<br>for e.g When chunkSize is set to 1000000 (~1mb), input file will be read and parsed 1mb at a time, a ajax thread will then insert 1mb chunk into csv2table</pre></td>
+</tr>
+<tr>
+<td><strong>Threads</strong></td>
+<td><pre>Number of parallel ajax sessions to create for inserting the parsed records. Each thread will insert 1 chunk by calling a on demand ajax plsql. When <strong>Stream</strong> is set to <strong>No</strong> , entire file will be read and parsed in javascript object, then it will be chunked and fed to threads to insert into csv2table.</pre></td>
+</tr>
+<tr>
+<td><strong>Insert Type</strong></td>
+<td><pre>Select <strong>JSON_TABLE</strong>, if your database version is 12c or later<br>Select <strong>APEX_DATA_PARSER</strong> for Apex version is 19.1 or later<br>Select <strong>XMLTABLE</strong>, for database version less than 12c or Apex version less than 19.1<br>select <strong>CUSTOM INSERT</strong>, to write your own implementation using clob containing chunked records in format configured in chunk format option.</pre></td>
+</tr>
+<tr>
+<td><strong>Chunk Inserted Callback Function</strong></td>
+<td><pre>You can write a javascript function which will be called after, a chunk is inserted. This function contains 1 arguments containing result object. You can use this function and result object to check or display the progress, pause and resume the reading and parsing of the input file.</pre></td>
+</tr>
+</tbody>
+</table>
+<pre><code class="language-javascript"><div><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">afterChunkInsertFn</span>(<span class="hljs-params">result</span>) </span>{
+    <span class="hljs-built_in">console</span>.log(results.options()); <span class="hljs-comment">//returns plugin options object</span>
+    <span class="hljs-built_in">console</span>.log(results.uploadID()); <span class="hljs-comment">//returns upload Identifier for records inserted</span>
+    <span class="hljs-built_in">console</span>.log(results.files()); <span class="hljs-comment">//array containing upload file information</span>
+    <span class="hljs-built_in">console</span>.log(results.fileCount()); 
+    <span class="hljs-built_in">console</span>.log(results.totalChunks()); <span class="hljs-comment">//total number of chunks to be inserted</span>
+    <span class="hljs-built_in">console</span>.log(results.chunked()); <span class="hljs-comment">// total number of chunks inserted so far</span>
+    <span class="hljs-built_in">console</span>.log(results.parsedRowCount()); <span class="hljs-comment">//total number of rows parsed</span>
+    <span class="hljs-built_in">console</span>.log(results.insertedRowCount()); <span class="hljs-comment">//total number of rows inserted</span>
+    <span class="hljs-built_in">console</span>.log(results.parsedErrorCount()); <span class="hljs-comment">//total number of parsing errors</span>
+    <span class="hljs-built_in">console</span>.log(results.insertedErrorCount()); <span class="hljs-comment">//total number of insert errors</span>
+    <span class="hljs-built_in">console</span>.log(results.startTime()); <span class="hljs-comment">//time when parsing file started</span>
+    <span class="hljs-built_in">console</span>.log(results.endTime()); <span class="hljs-comment">//time when all chunks were inserted</span>
+    <span class="hljs-built_in">console</span>.log(results.progressSoFar()); <span class="hljs-comment">// value betwee 0 and 1, 1 is 100% completed</span>
+    <span class="hljs-built_in">console</span>.log(results.error()); <span class="hljs-comment">// error information</span>
+    <span class="hljs-built_in">console</span>.log(results.status()); <span class="hljs-comment">// status information</span>
+    <span class="hljs-built_in">console</span>.log(results.parseResults()); <span class="hljs-comment">//parsed data in the chunk</span>
+    <span class="hljs-built_in">console</span>.log(results.halted()); <span class="hljs-comment">//true when parser is halted</span>
+    <span class="hljs-built_in">console</span>.log(results.completed()); <span class="hljs-comment">//true when all chunks are inserted</span>
+    <span class="hljs-comment">//you can pause parser and further chunking..   </span>
+    <span class="hljs-keyword">if</span> (chunkingNeedsToBePause() || csv2table) { <span class="hljs-comment">//where chunkingNeedsToBePause() is your function returns true when you want parser to pause</span>
+        csv2table.pause();
+    }
+     
+    <span class="hljs-comment">// do something here.. </span>
+
+    <span class="hljs-comment">//you can resume parser and further chunking and inserting</span>
+     <span class="hljs-keyword">if</span> (!chunkingNeedsToBePause() || csv2table) { <span class="hljs-comment">//where chunkingNeedsToBePause() is your function returns true when you want parser to pause</span>
+        csv2table.resume();
+    }
+}
+</div></code></pre>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Error Callback Function</strong></td>
+<td><pre>You can write a javascript function which will be called if an error is thrown either during parsing the file or inserting into the table. This function contains 1 arguments containing result object. You can use the result object to perform further error processing.</pre></td>
+</tr>
+</tbody>
+</table>
+<pre><code class="language-javascript"><div><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">afterErrorFn</span>(<span class="hljs-params">result</span>) </span>{
+    <span class="hljs-built_in">console</span>.log(results.options()); <span class="hljs-comment">//returns plugin options object</span>
+    <span class="hljs-built_in">console</span>.log(results.uploadID()); <span class="hljs-comment">//returns upload Identifier for records inserted</span>
+    <span class="hljs-built_in">console</span>.log(results.files()); <span class="hljs-comment">//array containing upload file information</span>
+    <span class="hljs-built_in">console</span>.log(results.fileCount()); 
+    <span class="hljs-built_in">console</span>.log(results.totalChunks()); <span class="hljs-comment">//total number of chunks to be inserted</span>
+    <span class="hljs-built_in">console</span>.log(results.chunked()); <span class="hljs-comment">// total number of chunks inserted so far</span>
+    <span class="hljs-built_in">console</span>.log(results.parsedRowCount()); <span class="hljs-comment">//total number of rows parsed</span>
+    <span class="hljs-built_in">console</span>.log(results.insertedRowCount()); <span class="hljs-comment">//total number of rows inserted</span>
+    <span class="hljs-built_in">console</span>.log(results.parsedErrorCount()); <span class="hljs-comment">//total number of parsing errors</span>
+    <span class="hljs-built_in">console</span>.log(results.insertedErrorCount()); <span class="hljs-comment">//total number of insert errors</span>
+    <span class="hljs-built_in">console</span>.log(results.startTime()); <span class="hljs-comment">//time when parsing file started</span>
+    <span class="hljs-built_in">console</span>.log(results.endTime()); <span class="hljs-comment">//time when all chunks were inserted</span>
+    <span class="hljs-built_in">console</span>.log(results.progressSoFar()); <span class="hljs-comment">// value betwee 0 and 1, 1 is 100% completed</span>
+    <span class="hljs-built_in">console</span>.log(results.error()); <span class="hljs-comment">// error information</span>
+    <span class="hljs-built_in">console</span>.log(results.status()); <span class="hljs-comment">// status information</span>
+    <span class="hljs-built_in">console</span>.log(results.parseResults()); <span class="hljs-comment">//parsed data in the chunk</span>
+    <span class="hljs-built_in">console</span>.log(results.halted()); <span class="hljs-comment">//true when parser is halted</span>
+    <span class="hljs-built_in">console</span>.log(results.completed()); <span class="hljs-comment">//true when all chunks are inserted</span>
+}
+</div></code></pre>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Complete Callback Function</strong></td>
+<td><pre>You can write a javascript function which will be called after file is successfully inserted into table, to continue further processing like refreshing reports, scheduling backend validations, transformation. This function has 1 input argument containing result object</pre></td>
+</tr>
+</tbody>
+</table>
+<pre><code class="language-javascript"><div><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">afterCompleteFn</span>(<span class="hljs-params">result</span>) </span>{
+    <span class="hljs-built_in">console</span>.log(results.options()); <span class="hljs-comment">//returns plugin options object</span>
+    <span class="hljs-built_in">console</span>.log(results.uploadID()); <span class="hljs-comment">//returns upload Identifier for records inserted</span>
+    <span class="hljs-built_in">console</span>.log(results.files()); <span class="hljs-comment">//array containing upload file information</span>
+    <span class="hljs-built_in">console</span>.log(results.fileCount()); 
+    <span class="hljs-built_in">console</span>.log(results.totalChunks()); <span class="hljs-comment">//total number of chunks to be inserted</span>
+    <span class="hljs-built_in">console</span>.log(results.chunked()); <span class="hljs-comment">// total number of chunks inserted so far</span>
+    <span class="hljs-built_in">console</span>.log(results.parsedRowCount()); <span class="hljs-comment">//total number of rows parsed</span>
+    <span class="hljs-built_in">console</span>.log(results.insertedRowCount()); <span class="hljs-comment">//total number of rows inserted</span>
+    <span class="hljs-built_in">console</span>.log(results.parsedErrorCount()); <span class="hljs-comment">//total number of parsing errors</span>
+    <span class="hljs-built_in">console</span>.log(results.insertedErrorCount()); <span class="hljs-comment">//total number of insert errors</span>
+    <span class="hljs-built_in">console</span>.log(results.startTime()); <span class="hljs-comment">//time when parsing file started</span>
+    <span class="hljs-built_in">console</span>.log(results.endTime()); <span class="hljs-comment">//time when all chunks were inserted</span>
+    <span class="hljs-built_in">console</span>.log(results.progressSoFar()); <span class="hljs-comment">// value betwee 0 and 1, 1 is 100% completed</span>
+    <span class="hljs-built_in">console</span>.log(results.error()); <span class="hljs-comment">// error information</span>
+    <span class="hljs-built_in">console</span>.log(results.status()); <span class="hljs-comment">// status information</span>
+    <span class="hljs-built_in">console</span>.log(results.parseResults()); <span class="hljs-comment">//parsed data in the chunk</span>
+    <span class="hljs-built_in">console</span>.log(results.halted()); <span class="hljs-comment">//true when parser is halted</span>
+    <span class="hljs-built_in">console</span>.log(results.completed()); <span class="hljs-comment">//true when all chunks are inserted</span>
+}
+</div></code></pre>
+<h2 id="configuration-using-javascript-initialization-code">Configuration using Javascript Initialization Code</h2>
+<p>Example below, plugin options are set using page item values</p>
+<pre><code class="language-Javascript"><div><span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">options</span>) </span>{
+    <span class="hljs-keyword">var</span> chunkSize = apex.item(<span class="hljs-string">&quot;P1_CHUNKSIZE&quot;</span>).getValue();
+    <span class="hljs-keyword">var</span> threads = apex.item(<span class="hljs-string">&quot;P1_THREADS&quot;</span>).getValue();
+    <span class="hljs-keyword">var</span> fileType = apex.item(<span class="hljs-string">&quot;P1_FILETYPE&quot;</span>).getValue();
+    <span class="hljs-keyword">var</span> fileID;
+    <span class="hljs-keyword">if</span> ( fileType == <span class="hljs-string">&#x27;local&#x27;</span> ) {
+        fileID = <span class="hljs-string">&quot;P1_FILE&quot;</span>;
+    }
+    <span class="hljs-keyword">if</span> ( fileType == <span class="hljs-string">&#x27;remote&#x27;</span> ) {
+        fileID = <span class="hljs-string">&quot;P1_URL&quot;</span>;
+    }
+    options.chunkSize = chunkSize;
+    options.threads = threads;
+    options.fileType = fileType;
+    options.fileID = fileID;
+}
+</div></code></pre>
+
+    </body>
+    </html>

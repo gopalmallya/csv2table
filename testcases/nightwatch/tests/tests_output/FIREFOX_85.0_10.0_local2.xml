@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites errors="7"
+            failures="1"
+            tests="1">
+
+  <testsuite name="local2"
+    errors="7" failures="1" hostname="" id="" package="local2" skipped="0"
+    tests="1" time="124.7" timestamp="">
+  
+    <testcase name="Demo test csv2table local" classname="local2" time="124.7" assertions="55">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+      <failure message="Testing if element &lt;Element [name=@result]&gt; contains text &#39;100%&#39; in 5000ms - expected &#34;contains text &#39;100%&#39;&#34; but got: &#34;does not contain &#39;100%&#39;&#34; (5549ms)">    at Page.fillAndSubmit (C:\Users\gopal_mallya\github\apex\csv2table\testcases\nightwatch\page-objects\upload.js:46:21)
+    at Page.local (C:\Users\gopal_mallya\github\apex\csv2table\testcases\nightwatch\page-objects\upload.js:4:19)
+    at Object.Demo test csv2table local (C:\Users\gopal_mallya\github\apex\csv2table\testcases\nightwatch\tests\local2.js:50:8)</failure>
+
+    
+    <error message="Error while running &#34;containsText&#34; command: Testing if element [0;33m&lt;Element [name=@result]&gt;[0m contains text [0;33m&#39;100%&#39;[0m in 5000ms - expected [0;32m&#34;contains text &#39;100%&#39;&#34;[0m but got: [0;31m&#34;does not contain &#39;100%&#39;&#34;[0m [0;90m(5549ms)[0m" type="error"><![CDATA[
+        at Page.fillAndSubmit (C:\Users\gopal_mallya\github\apex\csv2table\testcases\nightwatch\page-objects\upload.js:46:21)
+    at Page.local (C:\Users\gopal_mallya\github\apex\csv2table\testcases\nightwatch\page-objects\upload.js:4:19)
+    at Object.Demo test csv2table local (C:\Users\gopal_mallya\github\apex\csv2table\testcases\nightwatch\tests\local2.js:50:8)
+    ]]></error>
+    
+    </testcase>
+  
+
+  
+    <system-err>
+        TimeoutError: An error occurred while running .getText() command on &lt;Element [name=@result]&gt;: stale element reference; The element reference of &lt;span class=&#34;progressBarPCT u-color-35-text&#34;&gt; is stale; either the element is no longer attached to the DOM, it is not in the current frame context, or the document has been refreshed
+   {&#34;status&#34;:-1,&#34;value&#34;:{&#34;error&#34;:&#34;stale element reference&#34;,&#34;message&#34;:&#34;The element reference of &lt;span class=\&#34;progressBarPCT u-color-35-text\&#34;&gt; is stale; either the element is no longer attached to the DOM, it is not in the current frame context, or the document has been refreshed&#34;,&#34;stacktrace&#34;:&#34;&#34;},&#34;code&#34;:&#34;&#34;,&#34;errorStatus&#34;:&#34;&#34;,&#34;error&#34;:&#34;The element reference of &lt;span class=\&#34;progressBarPCT u-color-35-text\&#34;&gt; is stale; either the element is no longer attached to the DOM, it is not in the current frame context, or the document has been refreshed&#34;,&#34;httpStatusCode&#34;:404}
+       at processTicksAndRejections (internal/process/task_queues.js:93:5)
+  TimeoutError: An error occurred while running .getText() command on &lt;Element [name=@result]&gt;: stale element reference; The element reference of &lt;span class=&#34;progressBarPCT u-color-35-text&#34;&gt; is stale; either the element is no longer attached to the DOM, it is not in the current frame context, or the document has been refreshed
+   {&#34;status&#34;:-1,&#34;value&#34;:{&#34;error&#34;:&#34;stale element reference&#34;,&#34;message&#34;:&#34;The element reference of &lt;span class=\&#34;progressBarPCT u-color-35-text\&#34;&gt; is stale; either the element is no longer attached to the DOM, it is not in the current frame context, or the document has been refreshed&#34;,&#34;stacktrace&#34;:&#34;&#34;},&#34;code&#34;:&#34;&#34;,&#34;errorStatus&#34;:&#34;&#34;,&#34;error&#34;:&#34;The element reference of &lt;span class=\&#34;progressBarPCT u-color-35-text\&#34;&gt; is stale; either the element is no longer attached to the DOM, it is not in the current frame context, or the document has been refreshed&#34;,&#34;httpStatusCode&#34;:404}
+       at processTicksAndRejections (internal/process/task_queues.js:93:5)
+  TimeoutError: An error occurred while running .getText() command on &lt;Element [name=@result]&gt;: stale element reference; The element reference of &lt;span class=&#34;progressBarPCT u-color-35-text&#34;&gt; is stale; either the element is no longer attached to the DOM, it is not in the current frame context, or the document has been refreshed
+   {&#34;status&#34;:-1,&#34;value&#34;:{&#34;error&#34;:&#34;stale element reference&#34;,&#34;message&#34;:&#34;The element reference of &lt;span class=\&#34;progressBarPCT u-color-35-text\&#34;&gt; is stale; either the element is no longer attached to the DOM, it is not in the current frame context, or the document has been refreshed&#34;,&#34;stacktrace&#34;:&#34;&#34;},&#34;code&#34;:&#34;&#34;,&#34;errorStatus&#34;:&#34;&#34;,&#34;error&#34;:&#34;The element reference of &lt;span class=\&#34;progressBarPCT u-color-35-text\&#34;&gt; is stale; either the element is no longer attached to the DOM, it is not in the current frame context, or the document has been refreshed&#34;,&#34;httpStatusCode&#34;:404}
+       at processTicksAndRejections (internal/process/task_queues.js:93:5)
+  TimeoutError: An error occurred while running .getText() command on &lt;Element [name=@result]&gt;: stale element reference; The element reference of &lt;span class=&#34;progressBarPCT u-color-35-text&#34;&gt; is stale; either the element is no longer attached to the DOM, it is not in the current frame context, or the document has been refreshed
+   {&#34;status&#34;:-1,&#34;value&#34;:{&#34;error&#34;:&#34;stale element reference&#34;,&#34;message&#34;:&#34;The element reference of &lt;span class=\&#34;progressBarPCT u-color-35-text\&#34;&gt; is stale; either the element is no longer attached to the DOM, it is not in the current frame context, or the document has been refreshed&#34;,&#34;stacktrace&#34;:&#34;&#34;},&#34;code&#34;:&#34;&#34;,&#34;errorStatus&#34;:&#34;&#34;,&#34;error&#34;:&#34;The element reference of &lt;span class=\&#34;progressBarPCT u-color-35-text\&#34;&gt; is stale; either the element is no longer attached to the DOM, it is not in the current frame context, or the document has been refreshed&#34;,&#34;httpStatusCode&#34;:404}
+       at processTicksAndRejections (internal/process/task_queues.js:93:5)
+  TimeoutError: An error occurred while running .getText() command on &lt;Element [name=@result]&gt;: stale element reference; The element reference of &lt;span class=&#34;progressBarPCT u-color-35-text&#34;&gt; is stale; either the element is no longer attached to the DOM, it is not in the current frame context, or the document has been refreshed
+   {&#34;status&#34;:-1,&#34;value&#34;:{&#34;error&#34;:&#34;stale element reference&#34;,&#34;message&#34;:&#34;The element reference of &lt;span class=\&#34;progressBarPCT u-color-35-text\&#34;&gt; is stale; either the element is no longer attached to the DOM, it is not in the current frame context, or the document has been refreshed&#34;,&#34;stacktrace&#34;:&#34;&#34;},&#34;code&#34;:&#34;&#34;,&#34;errorStatus&#34;:&#34;&#34;,&#34;error&#34;:&#34;The element reference of &lt;span class=\&#34;progressBarPCT u-color-35-text\&#34;&gt; is stale; either the element is no longer attached to the DOM, it is not in the current frame context, or the document has been refreshed&#34;,&#34;httpStatusCode&#34;:404}
+       at processTicksAndRejections (internal/process/task_queues.js:93:5)
+  TimeoutError: An error occurred while running .getText() command on &lt;Element [name=@result]&gt;: stale element reference; The element reference of &lt;span class=&#34;progressBarPCT u-color-35-text&#34;&gt; is stale; either the element is no longer attached to the DOM, it is not in the current frame context, or the document has been refreshed
+   {&#34;status&#34;:-1,&#34;value&#34;:{&#34;error&#34;:&#34;stale element reference&#34;,&#34;message&#34;:&#34;The element reference of &lt;span class=\&#34;progressBarPCT u-color-35-text\&#34;&gt; is stale; either the element is no longer attached to the DOM, it is not in the current frame context, or the document has been refreshed&#34;,&#34;stacktrace&#34;:&#34;&#34;},&#34;code&#34;:&#34;&#34;,&#34;errorStatus&#34;:&#34;&#34;,&#34;error&#34;:&#34;The element reference of &lt;span class=\&#34;progressBarPCT u-color-35-text\&#34;&gt; is stale; either the element is no longer attached to the DOM, it is not in the current frame context, or the document has been refreshed&#34;,&#34;httpStatusCode&#34;:404}
+       at processTicksAndRejections (internal/process/task_queues.js:93:5)
+  TimeoutError: An error occurred while running .getText() command on &lt;Element [name=@result]&gt;: stale element reference; The element reference of &lt;span class=&#34;progressBarPCT u-color-35-text&#34;&gt; is stale; either the element is no longer attached to the DOM, it is not in the current frame context, or the document has been refreshed
+   {&#34;status&#34;:-1,&#34;value&#34;:{&#34;error&#34;:&#34;stale element reference&#34;,&#34;message&#34;:&#34;The element reference of &lt;span class=\&#34;progressBarPCT u-color-35-text\&#34;&gt; is stale; either the element is no longer attached to the DOM, it is not in the current frame context, or the document has been refreshed&#34;,&#34;stacktrace&#34;:&#34;&#34;},&#34;code&#34;:&#34;&#34;,&#34;errorStatus&#34;:&#34;&#34;,&#34;error&#34;:&#34;The element reference of &lt;span class=\&#34;progressBarPCT u-color-35-text\&#34;&gt; is stale; either the element is no longer attached to the DOM, it is not in the current frame context, or the document has been refreshed&#34;,&#34;httpStatusCode&#34;:404}
+       at processTicksAndRejections (internal/process/task_queues.js:93:5)
+    </system-err>
+  
+
+    
+
+  
+  </testsuite>
+</testsuites>
