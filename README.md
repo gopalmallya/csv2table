@@ -1,6 +1,9 @@
-# csv2table (Beta Version 1.0)
+# csv2table (1.0 Beta)
  csv2table is Oracle Apex, dynamic action plugin, built to upload large csv datasets into table. 
- 
+
+# Changelog
+- 1.0 - Beta
+
 # Demo
 - Users can upload local csv file and remote csv using url, monitor the progress and review the inserted records
 - Options such as streaming, chunkSize, Threads and PLSQL data parsers, realtime progress monitoring, highlight plugin features
