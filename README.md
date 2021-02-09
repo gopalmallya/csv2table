@@ -1,9 +1,9 @@
 # csv2table 
- csv2table is Oracle Apex, dynamic action plugin, built to upload large csv datasets (100mb-1gb+) into table, by streaming the local or remote csv file, keeping the browser memory low and using parallel sessions for fast and efficient uploads.
+ csv2table is Oracle APEX, dynamic action plugin, built to upload large csv datasets (100mb-1gb+) into table, by streaming the local or remote csv file, keeping the browser memory low and using parallel sessions for fast and efficient uploads.
 
 **Why use csv2table?**
 
-Uploading large csv datasets (100mb-1gb+) from apex application can take hours to upload, parse and insert into table, csv2table plugin solves this problem, makes it a lot (10x) faster. 
+Uploading large csv datasets (100mb-1gb+) from APEX application can take hours to upload, parse and insert into table, csv2table plugin solves this problem, makes it a lot (10x) faster. 
 
 Note - I have uploaded 1.5GB of csv file without exhausting browser memory under 11 minutes in free oracle cloud VM environment, which comes to ~ 2mb/sec. I believe in production environment, one can upload 1GB csv file under 1 minute by tuning chunkSize and Threads. Please read FAQ for more information. 
 
@@ -13,21 +13,21 @@ Note - I have uploaded 1.5GB of csv file without exhausting browser memory under
 - [ demo ](https://gopalmallya.com/ords/r/gopalmallya/csv2table) 
 
 # Environment
-- Tested using Nightwatch/Firefox/Chrome/Oracle DB 19c/Apex 20.2 and Oracle DB 11.2.0.0/Apex 5.1.4
-- The plugin PLSQL code, uses dynamic sql and no version dependent features, to support this functionality on oracle database 11.x and later and Apex 5.x and later
+- Tested using Nightwatch/Firefox/Chrome/Oracle DB 19c/APEX 20.2 and Oracle DB 11.2.0.0/APEX 5.1.4
+- The plugin PLSQL code, uses dynamic sql and no version dependent features, to support this functionality on oracle database 11.x and later and APEX 5.x and later
 
  
 # Install
 - Download create_csv2table_seq.sql and csv2table_plugin.sql from [ install directory ](https://github.com/gopalmallya/csv2table/tree/main/install)
 
-- Execute **create_csv2table_seq.sql** to create “csv2table” table and sequence “csv2table_seq”, in apex parsing schema.    
+- Execute **create_csv2table_seq.sql** to create “csv2table” table and sequence “csv2table_seq”, in APEX parsing schema.    
     ```s
         @create_csv2table_seq.sql
     ``` 
     Note - You can execute this script in another schema of your choice, but please create synonyms for table and sequence.
 
 - Import **csv2table_plugin.sql**, to install the plugin
-    > Login to your Apex workspace → App Builder → Import → Choose “csvtable_plugin.sql” → File type → Plug-in → Next → Install Plugin
+    > Login to your APEX workspace → App Builder → Import → Choose “csvtable_plugin.sql” → File type → Plug-in → Next → Install Plugin
 
 # Configure
 Below is an example plugin configuration to upload local file selected in file browse page item P1_FILE, when user clicks upload button
@@ -39,8 +39,8 @@ Below is an example plugin configuration to upload local file selected in file b
     - *File ID* → P1_FILE
     - *Insert Type*
         - JSON_TABLE (database version 12c or later)
-        - APEX_DATA_PARSER ( apex version 19.1 or later)
-        - XMLTABLE ( for database version < 12c and apex version < 19.1 )
+        - APEX_DATA_PARSER ( APEX version 19.1 or later)
+        - XMLTABLE ( for database version < 12c and APEX version < 19.1 )
                   
 - For more information on configuration options, select the Option → click Help
 
@@ -66,7 +66,7 @@ You can change the behaviour of csv2table plugin by configuring options, in dyna
 |**Stream**|<pre>When stream is set to **Yes**, the file will be read and parsed in chunks, per byte size set in **chunkSize** option, keeping client side javascript memory usage low and also speeding up the inserts into table <br>When set to **No** , entire file will be read in javascript memory<br>When FileType is Remote URL, stream = **Yes**, will result in CORS error thrown by browser, unless CORS Access-Control-Allow-Origin header is enabled at the source hosting the csv file.</pre>|
 |**chunkSize**|<pre>chunkSize is the number of bytes used by javascript parser (Papaparse) to parse file in chunks at a time, when **Stream** option is set to **Yes**.<br>Ajax thread inserts a single chunk into the csv2table.<br>Please configure the **chunkSize** and **threads** as a combination to tune memory and insert performance.<br>for e.g When chunkSize is set to 1000000 (~1mb), input file will be read and parsed 1mb at a time, a ajax thread will then insert 1mb chunk into csv2table</pre>|
 |**Threads**|<pre>Number of parallel ajax sessions to create for inserting the parsed records. Each thread will insert 1 chunk by calling a on demand ajax plsql. When **Stream** is set to **No** , entire file will be read and parsed in javascript object, then it will be chunked and fed to threads to insert into csv2table.</pre>|
-|**Insert Type**|<pre>Select **JSON_TABLE**, if your database version is 12c or later<br>Select **APEX_DATA_PARSER** for Apex version is 19.1 or later<br>Select **XMLTABLE**, for database version less than 12c or Apex version less than 19.1<br>select **CUSTOM INSERT**, to write your own implementation using clob containing chunked records in format configured in chunk format option.</pre>|
+|**Insert Type**|<pre>Select **JSON_TABLE**, if your database version is 12c or later<br>Select **APEX_DATA_PARSER** for APEX version is 19.1 or later<br>Select **XMLTABLE**, for database version less than 12c or APEX version less than 19.1<br>select **CUSTOM INSERT**, to write your own implementation using clob containing chunked records in format configured in chunk format option.</pre>|
 |**Chunk Inserted Callback Function**|<pre>You can write a javascript function which will be called after, a chunk is inserted. This function contains 1 arguments containing result object. You can use this function and result object to check or display the progress, pause and resume the reading and parsing of the input file.</pre>
 ```javascript
 function afterChunkInsertFn(result) {

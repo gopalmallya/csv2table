@@ -24,9 +24,9 @@
     </head>
     <body class="vscode-body vscode-light">
         <h1 id="csv2table">csv2table</h1>
-<p>csv2table is Oracle Apex, dynamic action plugin, built to upload large csv datasets (100mb-1gb+) into table, by streaming the local or remote csv file, keeping the browser memory low and using parallel sessions for fast and efficient uploads.</p>
+<p>csv2table is Oracle APEX, dynamic action plugin, built to upload large csv datasets (100mb-1gb+) into table, by streaming the local or remote csv file, keeping the browser memory low and using parallel sessions for fast and efficient uploads.</p>
 <p><strong>Why use csv2table?</strong></p>
-<p>Uploading large csv datasets (100mb-1gb+) from apex application can take hours to upload, parse and insert into table, csv2table plugin solves this problem, makes it a lot (10x) faster.</p>
+<p>Uploading large csv datasets (100mb-1gb+) from APEX application can take hours to upload, parse and insert into table, csv2table plugin solves this problem, makes it a lot (10x) faster.</p>
 <p>Note - I have uploaded 1.5GB of csv file without exhausting browser memory under 11 minutes in free oracle cloud VM environment, which comes to ~ 2mb/sec. I believe in production environment, one can upload 1GB csv file under 1 minute by tuning chunkSize and Threads. Please read FAQ for more information.</p>
 <h1 id="demo">Demo</h1>
 <ul>
@@ -36,8 +36,8 @@
 </ul>
 <h1 id="environment">Environment</h1>
 <ul>
-<li>Tested using Nightwatch/Firefox/Chrome/Oracle DB 19c/Apex 20.2 and Oracle DB 11.2.0.0/Apex 5.1.4</li>
-<li>The plugin PLSQL code, uses dynamic sql and no version dependent features, to support this functionality on oracle database 11.x and later and Apex 5.x and later</li>
+<li>Tested using Nightwatch/Firefox/Chrome/Oracle DB 19c/APEX 20.2 and Oracle DB 11.2.0.0/APEX 5.1.4</li>
+<li>The plugin PLSQL code, uses dynamic sql and no version dependent features, to support this functionality on oracle database 11.x and later and APEX 5.x and later</li>
 </ul>
 <h1 id="install">Install</h1>
 <ul>
@@ -45,7 +45,7 @@
 <p>Download create_csv2table_seq.sql and csv2table_plugin.sql from <a href="https://github.com/gopalmallya/csv2table/tree/main/install"> install directory </a></p>
 </li>
 <li>
-<p>Execute <strong>create_csv2table_seq.sql</strong> to create “csv2table” table and sequence “csv2table_seq”, in apex parsing schema.</p>
+<p>Execute <strong>create_csv2table_seq.sql</strong> to create “csv2table” table and sequence “csv2table_seq”, in APEX parsing schema.</p>
 <pre><code class="language-s"><code><div>    @create_csv2table_seq.sql
 </div></code></code></pre>
 <p>Note - You can execute this script in another schema of your choice, but please create synonyms for table and sequence.</p>
@@ -53,7 +53,7 @@
 <li>
 <p>Import <strong>csv2table_plugin.sql</strong>, to install the plugin</p>
 <blockquote>
-<p>Login to your Apex workspace → App Builder → Import → Choose “csvtable_plugin.sql” → File type → Plug-in → Next → Install Plugin</p>
+<p>Login to your APEX workspace → App Builder → Import → Choose “csvtable_plugin.sql” → File type → Plug-in → Next → Install Plugin</p>
 </blockquote>
 </li>
 </ul>
@@ -75,8 +75,8 @@
 <li><em>Insert Type</em>
 <ul>
 <li>JSON_TABLE (database version 12c or later)</li>
-<li>APEX_DATA_PARSER ( apex version 19.1 or later)</li>
-<li>XMLTABLE ( for database version &lt; 12c and apex version &lt; 19.1 )</li>
+<li>APEX_DATA_PARSER ( APEX version 19.1 or later)</li>
+<li>XMLTABLE ( for database version &lt; 12c and APEX version &lt; 19.1 )</li>
 </ul>
 </li>
 </ul>
@@ -131,7 +131,7 @@
 </tr>
 <tr>
 <td><strong>Insert Type</strong></td>
-<td><pre>Select <strong>JSON_TABLE</strong>, if your database version is 12c or later<br>Select <strong>APEX_DATA_PARSER</strong> for Apex version is 19.1 or later<br>Select <strong>XMLTABLE</strong>, for database version less than 12c or Apex version less than 19.1<br>select <strong>CUSTOM INSERT</strong>, to write your own implementation using clob containing chunked records in format configured in chunk format option.</pre></td>
+<td><pre>Select <strong>JSON_TABLE</strong>, if your database version is 12c or later<br>Select <strong>APEX_DATA_PARSER</strong> for APEX version is 19.1 or later<br>Select <strong>XMLTABLE</strong>, for database version less than 12c or APEX version less than 19.1<br>select <strong>CUSTOM INSERT</strong>, to write your own implementation using clob containing chunked records in format configured in chunk format option.</pre></td>
 </tr>
 <tr>
 <td><strong>Chunk Inserted Callback Function</strong></td>

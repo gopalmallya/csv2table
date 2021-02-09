@@ -1,18 +1,18 @@
 **Why use csv2table?**
 
-Uploading large csv datasets (100mb-1gb+) from apex application can take hours to upload, parse and insert into table, csv2table plugin solves this problem, makes it a lot (10x) faster. 
+Uploading large csv datasets (100mb-1gb+) from APEX application can take hours to upload, parse and insert into table, csv2table plugin solves this problem, makes it a lot (10x) faster. 
 
 Note - I have uploaded 1.5GB of csv file without exhausting browser memory under 11 minutes in free oracle cloud VM environment, which comes to ~ 2mb/sec. I believe in production environment, once can upload 1GB csv file under 1 minute by tuning chunkSize and Threads. Please read FAQ for more information. 
 
-**can I use csv2table with oracle 11g and Apex 5.x ?**
+**can I use csv2table with oracle 11g and APEX 5.x ?**
 
-Yes, the plugin can be configured to use any plsql data parser like json_table, apex_data_parser, xmltable and custom insert implementation, making it possible to be used in any database and apex version. 
+Yes, the plugin can be configured to use any plsql data parser like json_table, APEX_DATA_PARSER, xmltable and custom insert implementation, making it possible to be used in any database and APEX version. 
 
-Version 1.0 was developed on 11.2.0.0/Apex 5.1.4 and tested on database 19.0 and Apex version 20.2. 
+Version 1.0 was developed on 11.2.0.0/APEX 5.1.4 and tested on database 19.0 and APEX version 20.2. 
 
-**can I insert records into other schema than apex parsing schema?**
+**can I insert records into other schema than APEX parsing schema?**
 
-Yes, plugin code will execute insert against csv2table (table) using dynamic sql. You will have to create table synonym and give insert grants to apex parsing schema.
+Yes, plugin code will execute insert against csv2table (table) using dynamic sql. You will have to create table synonym and give insert grants to APEX parsing schema.
 You can also choose custom insert implementation to insert in any schema or table per your environment and requirements
 
 **Why is csv2table plugin fast?**
