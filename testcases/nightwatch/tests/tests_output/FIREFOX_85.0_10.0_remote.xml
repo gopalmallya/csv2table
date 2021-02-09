@@ -5,9 +5,9 @@
 
   <testsuite name="remote"
     errors="0" failures="0" hostname="" id="" package="remote" skipped="0"
-    tests="1" time="442.6" timestamp="">
+    tests="1" time="451.0" timestamp="">
   
-    <testcase name="Demo test csv2table remote" classname="remote" time="442.6" assertions="192">
+    <testcase name="Demo test csv2table remote" classname="remote" time="451.0" assertions="192">
 
     
 

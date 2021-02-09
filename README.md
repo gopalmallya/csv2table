@@ -1,8 +1,11 @@
-# csv2table (1.0 Beta)
- csv2table is Oracle Apex, dynamic action plugin, built to upload large csv datasets into table. 
+# csv2table 
+ csv2table is Oracle Apex, dynamic action plugin, built to upload large csv datasets (100mb-1gb+) into table, by streaming the local or remote csv file, keeping the browser memory low and using parallel sessions for fast and efficient uploads.
 
-# Changelog
-- 1.0 - Beta
+**Why use csv2table?**
+
+Uploading large csv datasets (100mb-1gb+) from apex application can take hours to upload, parse and insert into table, csv2table plugin solves this problem, makes it a lot (10x) faster. 
+
+Note - I have uploaded 1.5GB of csv file without exhausting browser memory under 11 minutes in free oracle cloud VM environment, which comes to ~ 2mb/sec. I believe in production environment, one can upload 1GB csv file under 1 minute by tuning chunkSize and Threads. Please read FAQ for more information. 
 
 # Demo
 - Users can upload local csv file and remote csv using url, monitor the progress and review the inserted records
@@ -10,21 +13,21 @@
 - [ demo ](https://gopalmallya.com/ords/r/gopalmallya/csv2table) 
 
 # Environment
-- Tested using Nightwatch/Firefox/Chrome/Oracle DB 19c/Apex 20.2
-- The plugin PLSQL code, uses dynamic sql and no version dependent features, to support this functionality on any databases 10g or later
-- Work is under progress to test in Oracle DB 11g/Apex 5.x
+- Tested using Nightwatch/Firefox/Chrome/Oracle DB 19c/Apex 20.2 and Oracle DB 11.2.0.0/Apex 5.1.4
+- The plugin PLSQL code, uses dynamic sql and no version dependent features, to support this functionality on oracle database 11.x and later and Apex 5.x and later
+
  
 # Install
-- Download create_csv2table_seq.sql and csv2table_plugin.sql from [ install directory ](https://github.com/gopalmallya/apex/tree/main/csv2table/install)
+- Download create_csv2table_seq.sql and csv2table_plugin.sql from [ install directory ](https://github.com/gopalmallya/csv2table/tree/main/install)
 
-- Execute create_csv2table_seq.sql to create “csv2table” table and sequence “csv2table_seq”, in apex parsing schema.    
+- Execute **create_csv2table_seq.sql** to create “csv2table” table and sequence “csv2table_seq”, in apex parsing schema.    
     ```s
         @create_csv2table_seq.sql
     ``` 
     Note - You can execute this script in another schema of your choice, but please create synonyms for table and sequence.
 
-- Import csv2table_plugin.sql, to install the plugin
-    > Login to your Apex workspace → App Builder → Import → Choose “csv2table.sql” → File type → Plug-in → Next → Install Plugin
+- Import **csv2table_plugin.sql**, to install the plugin
+    > Login to your Apex workspace → App Builder → Import → Choose “csvtable_plugin.sql” → File type → Plug-in → Next → Install Plugin
 
 # Configure
 Below is an example plugin configuration to upload local file selected in file browse page item P1_FILE, when user clicks upload button
@@ -169,4 +172,3 @@ function (options) {
     options.fileID = fileID;
 }
 ```
-

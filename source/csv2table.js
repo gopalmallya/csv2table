@@ -169,8 +169,11 @@ var csv2table = ( function($){
             if (config.stream == 'N') {
                 config.chunk = undefined;
             }
-        
-
+            
+            if ( config.fileType == 'remote') {
+                config.download = true;  
+            } 
+            
 
             ajaxIdentifier = config.ajaxId;
             config.buttonID = daContext.triggeringElement.id;
@@ -524,6 +527,7 @@ var csv2table = ( function($){
                        callBackReturnObject.status = status;
                        callBackReturnObject.totalChunks = totalChunks;
                        callBackReturnObject.chunked = chunked;
+                       callBackReturnObject.parseResults = results;
                        chunk_inserted_callback_fn(callBackReturnObject);    
                    }
                    
@@ -545,6 +549,7 @@ var csv2table = ( function($){
                        callBackReturnObject.status = status;
                        callBackReturnObject.totalChunks = totalChunks;
                        callBackReturnObject.chunked = chunked;
+                       callBackReturnObject.parseResults = results;
                        complete_callback_fn(callBackReturnObject);
                        
                    }

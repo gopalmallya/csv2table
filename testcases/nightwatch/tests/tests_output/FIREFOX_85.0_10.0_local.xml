@@ -5,9 +5,9 @@
 
   <testsuite name="local"
     errors="0" failures="0" hostname="" id="" package="local" skipped="0"
-    tests="1" time="414.6" timestamp="">
+    tests="1" time="425.5" timestamp="">
   
-    <testcase name="Demo test csv2table local" classname="local" time="414.6" assertions="192">
+    <testcase name="Demo test csv2table local" classname="local" time="425.5" assertions="192">
 
     
 
