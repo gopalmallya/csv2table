@@ -3,7 +3,7 @@
   "version" : "1.0",
   "description" : "csv2table is Oracle Apex, dynamic action plugin, built to upload large csv datasets into table",
   "keywords" : ["csv", "parser", "upload", "table"],
-  "homepage" : "https://github.com/gopalmallya",
+  "homepage" : "https://github.com/gopalmallya/csv2table",
   "bugs" : {
     "url" : "https://github.com/gopalmallya/csv2table/issues",
     "email" : "gopalmallya73@gmail.com"
@@ -13,16 +13,16 @@
   "author" : {
     "name" : "Gopal Mallya",
     "email" : "gopalmallya73@gmail.com",
-    "url" : "https://github.com/gopalmallya/csv2table"
+    "url" : "https://github.com/gopalmallya"
   },
   "repository" : {
     "type" : "git",
-    "url" : "https://github.com/gopalmallya/csv2table"
+    "url" : "https://github.com/gopalmallya/csv2table.git"
   },
  "oracle" : {
-    "versions" : ["19.0.0.0.0"],
+    "versions" : ["11.2.0.1", "12.1.0.1", "12.2.0.1", "18.4.0.0", "19.0.0.0.0"],
     "apex" : {
-      "versions" : ["20.2.0.00.20"],
+      "versions" : ["5.1.4", "18.1.0.00.45", "18.2.0.00.12", "19.1.0.00.15", "19.2.0.00.18", "20.1.0.00.13", "20.2.0.00.20"],
       "plugin" : {
         "internalName" : "COM.GM.CSV2TABLE",
         "type" : "dynamic action",
