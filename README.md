@@ -3,7 +3,11 @@
 
 **Why use csv2table?**
 
-Uploading large csv datasets (100mb-1gb+) from APEX application can take hours to upload, parse and insert into table, csv2table plugin solves this problem, makes it a lot (10x) faster. 
+Uploading large csv datasets (100mb-1gb+) from APEX application can exhaust browser memory and take hours to upload, parse and insert into table.
+
+csv2table plugin is built to solve this problem and make uploading large csv file look silent and effortless. 
+
+I think of csv2table plugin, as small sump pump which can silently drain a huge swimming pool, with a difference that you can add as many drain pipes to drain the water faster.
 
 Note - I have uploaded 1.5GB of csv file without exhausting browser memory under 11 minutes in free oracle cloud VM environment, which comes to ~ 2mb/sec. I believe in production environment, one can upload 1GB csv file under 1 minute by tuning chunkSize and Threads. Please read FAQ for more information. 
 
