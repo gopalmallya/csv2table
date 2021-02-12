@@ -221,6 +221,9 @@ Other main reason, csv2table is position based, than header-column map based, is
 
 I will add header-column mapping in future release, to support this usecase. For now the workaround will be to insert the column header (skip=0) and write a mapper in dynamic plsql using the header name and csv2table.c1...cn 
 
+**How many columns can be uploaded?**
+
+Plugin supports upto 100 columns. More columns can be added to csv2table and AJAX function in the plugin, when required.
 
 
 

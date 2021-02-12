@@ -32,3 +32,4 @@ insert into CSV2TABLE_DEMO_REMOTE_URL(url,filesize) values ('https://gopalmallya
 insert into CSV2TABLE_DEMO_REMOTE_URL(url,filesize) values ('https://gopalmallya.com/csv/US-shooting-incidents.csv',1334713);  
 insert into CSV2TABLE_DEMO_REMOTE_URL(url,filesize) values ('https://gopalmallya.com/csv/uber-rides-data1.csv',58604196);  
 insert into CSV2TABLE_DEMO_REMOTE_URL(url,filesize) values ('https://gopalmallya.com/csv/credit_line.csv.csv',90470092);  
+commit;

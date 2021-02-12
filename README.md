@@ -9,8 +9,12 @@ Note - I have uploaded 1.5GB of csv file without exhausting browser memory under
 
 # Demo
 - Users can upload local csv file and remote csv using url, monitor the progress and review the inserted records
-- Options such as streaming, chunkSize, Threads and PLSQL data parsers, realtime progress monitoring, highlight plugin features
-- [ demo ](https://gopalmallya.com/ords/r/gopalmallya/csv2table) 
+- Options such as streaming, chunkSize, Threads, PLSQL data parsers, realtime progress monitoring are presented to highlight plugin features
+- click [ demo ](https://gopalmallya.com/ords/r/gopalmallya/csv2table) to explore the plugin features
+- Demo application is available at [demo app](https://github.com/gopalmallya/csv2table/tree/main/demo) and to Install demo application
+  - Execute remote_url_table.sql, which is used to list remote urls in the remote popoup lov
+  - Import csv2table_demo_apex_app_5.1.4.sql (developed on 5.1.4 APEX version) or csv2table_demo_apex_app_20.2.sql (developed on 20.2 APEX version)
+  
 
 # Environment
 - Tested using Nightwatch/Firefox/Chrome/Oracle DB 19c/APEX 20.2 and Oracle DB 11.2.0.0/APEX 5.1.4

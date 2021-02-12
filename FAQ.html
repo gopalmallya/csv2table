@@ -177,6 +177,8 @@ for e.g if your file size is within 5mb, then set the chunkSize to 10mb for file
 If csv file contains header it will also be inserted. You can configure skip option and set to 1, to skip the first header record.</p>
 <p>Other main reason, csv2table is position based, than header-column map based, is because, the size of parsed record in JSON increases with header-column mapping. Every column (value) is mapped to header (key) for every record. This results in size increase and slower performance, than sending just array of column value, which is second fastest way. First is binary.</p>
 <p>I will add header-column mapping in future release, to support this usecase. For now the workaround will be to insert the column header (skip=0) and write a mapper in dynamic plsql using the header name and csv2table.c1...cn</p>
+<p><strong>How many columns can be uploaded?</strong></p>
+<p>Plugin supports upto 100 columns. More columns can be added to csv2table and AJAX function in the plugin, when required.</p>
 
     </body>
     </html>
