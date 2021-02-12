@@ -2,7 +2,7 @@
   "name" : "csv2table",
   "version" : "1.0",
   "description" : "csv2table is Oracle APEX, dynamic action plugin, built to upload large (100mb-1gb+) csv datasets into table",
-  "keywords" : ["csv", "parser", "upload", "table"],
+  "keywords" : ["csv", "parser", "upload", "table", "Stream", "Chunk"] 
   "homepage" : "https://github.com/gopalmallya/csv2table",
   "bugs" : {
     "url" : "https://github.com/gopalmallya/csv2table/issues",

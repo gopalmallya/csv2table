@@ -7,7 +7,7 @@ declare
     l_cnt pls_integer :=0;
     l_table_name varchar2(30) := 'CSV2TABLE_DEMO_REMOTE_URL';
     l_create_table_sql varchar2(32767) := 'create table '|| l_table_name ||'
-    ( URL varchar2(1000), size number)';
+    ( URL varchar2(1000), filesize number)';
 
 begin
     --create table
